@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react'
+import { useReducer, useState, useEffect } from 'react'
 import { TeamSelector } from './components/TeamSelector.jsx'
 import { FieldView } from './components/FieldView.jsx'
 import { PlayPicker } from './components/PlayPicker.jsx'
@@ -6,27 +6,35 @@ import { DriveResult } from './components/DriveResult.jsx'
 import { driveReducer, initialDriveState } from './engine/drive.js'
 
 function App() {
-  const [screen, setScreen] = useState('team-select')
+  const [gamePhase, setGamePhase] = useState('team_select')
   const [offenseTeam, setOffenseTeam] = useState(null)
   const [defenseTeam, setDefenseTeam] = useState(null)
   const [drive, dispatch] = useReducer(driveReducer, initialDriveState)
 
+  useEffect(() => {
+    if (drive.result !== null && gamePhase === 'drive') {
+      setGamePhase('result')
+    }
+  }, [drive.result, gamePhase])
+
   function handleStart(offense, defense) {
     setOffenseTeam(offense)
     setDefenseTeam(defense)
-    setScreen('game')
+    setGamePhase('drive')
   }
 
   function handlePlayAgain() {
     dispatch({ type: 'RESET' })
-    setScreen('team-select')
+    setOffenseTeam(null)
+    setDefenseTeam(null)
+    setGamePhase('team_select')
   }
 
-  if (screen === 'team-select') {
+  if (gamePhase === 'team_select') {
     return <TeamSelector onStart={handleStart} />
   }
 
-  if (drive.result !== null) {
+  if (gamePhase === 'result') {
     return <DriveResult drive={drive} onPlayAgain={handlePlayAgain} />
   }
 
@@ -39,13 +47,15 @@ function App() {
           {defenseTeam?.year} {defenseTeam?.city} {defenseTeam?.name}
         </p>
       </div>
-      <FieldView defenseTeam={defenseTeam} />
-      <PlayPicker
-        drive={drive}
-        dispatch={dispatch}
-        offenseTeam={offenseTeam}
-        defenseTeam={defenseTeam}
-      />
+      <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 items-start justify-center">
+        <FieldView defenseTeam={defenseTeam} />
+        <PlayPicker
+          drive={drive}
+          dispatch={dispatch}
+          offenseTeam={offenseTeam}
+          defenseTeam={defenseTeam}
+        />
+      </div>
     </div>
   )
 }
