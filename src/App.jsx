@@ -2,6 +2,7 @@ import { useReducer, useState } from 'react'
 import { TeamSelector } from './components/TeamSelector.jsx'
 import { FieldView } from './components/FieldView.jsx'
 import { PlayPicker } from './components/PlayPicker.jsx'
+import { DriveResult } from './components/DriveResult.jsx'
 import { driveReducer, initialDriveState } from './engine/drive.js'
 
 function App() {
@@ -16,8 +17,17 @@ function App() {
     setScreen('game')
   }
 
+  function handlePlayAgain() {
+    dispatch({ type: 'RESET' })
+    setScreen('team-select')
+  }
+
   if (screen === 'team-select') {
     return <TeamSelector onStart={handleStart} />
+  }
+
+  if (drive.result !== null) {
+    return <DriveResult drive={drive} onPlayAgain={handlePlayAgain} />
   }
 
   return (

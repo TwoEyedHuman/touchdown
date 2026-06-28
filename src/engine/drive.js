@@ -9,6 +9,7 @@ export const initialDriveState = {
 }
 
 export function driveReducer(state, action) {
+  if (action.type === 'RESET') return initialDriveState
   if (action.type !== 'CALL_PLAY') return state
 
   const { play, offenseTeam, defenseTeam } = action.payload
