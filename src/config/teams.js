@@ -1,1 +1,130 @@
-export const teams = []
+/**
+ * @typedef {{ runAttack: number, passAttack: number, olStrength: number, skillPlayers: number }} Offense
+ * @typedef {{ runStop: number, passCoverage: number, passRush: number, secondary: number }} Defense
+ * @typedef {{ id: string, year: number, city: string, name: string, offense: Offense, defense: Defense }} Team
+ *
+ * All rating values are integers 1–99.
+ * @type {Team[]}
+ */
+export const teams = [
+  {
+    id: 'ne-2007',
+    year: 2007,
+    city: 'New England',
+    name: 'Patriots',
+    offense: { runAttack: 72, passAttack: 98, olStrength: 85, skillPlayers: 97 },
+    defense: { runStop: 80, passCoverage: 82, passRush: 78, secondary: 80 },
+  },
+  {
+    id: 'bal-2000',
+    year: 2000,
+    city: 'Baltimore',
+    name: 'Ravens',
+    offense: { runAttack: 82, passAttack: 60, olStrength: 78, skillPlayers: 62 },
+    defense: { runStop: 98, passCoverage: 94, passRush: 96, secondary: 97 },
+  },
+  {
+    id: 'sea-2013',
+    year: 2013,
+    city: 'Seattle',
+    name: 'Seahawks',
+    offense: { runAttack: 88, passAttack: 76, olStrength: 80, skillPlayers: 78 },
+    defense: { runStop: 90, passCoverage: 97, passRush: 85, secondary: 98 },
+  },
+  {
+    id: 'chi-1985',
+    year: 1985,
+    city: 'Chicago',
+    name: 'Bears',
+    offense: { runAttack: 84, passAttack: 62, olStrength: 80, skillPlayers: 68 },
+    defense: { runStop: 97, passCoverage: 90, passRush: 98, secondary: 92 },
+  },
+  {
+    id: 'stl-1999',
+    year: 1999,
+    city: 'St. Louis',
+    name: 'Rams',
+    offense: { runAttack: 74, passAttack: 97, olStrength: 82, skillPlayers: 96 },
+    defense: { runStop: 72, passCoverage: 74, passRush: 76, secondary: 70 },
+  },
+  {
+    id: 'kc-2018',
+    year: 2018,
+    city: 'Kansas City',
+    name: 'Chiefs',
+    offense: { runAttack: 70, passAttack: 96, olStrength: 78, skillPlayers: 95 },
+    defense: { runStop: 74, passCoverage: 72, passRush: 70, secondary: 68 },
+  },
+  {
+    id: 'mia-1972',
+    year: 1972,
+    city: 'Miami',
+    name: 'Dolphins',
+    offense: { runAttack: 92, passAttack: 72, olStrength: 90, skillPlayers: 74 },
+    defense: { runStop: 88, passCoverage: 80, passRush: 82, secondary: 82 },
+  },
+  {
+    id: 'den-2015',
+    year: 2015,
+    city: 'Denver',
+    name: 'Broncos',
+    offense: { runAttack: 68, passAttack: 80, olStrength: 70, skillPlayers: 78 },
+    defense: { runStop: 88, passCoverage: 92, passRush: 98, secondary: 94 },
+  },
+  {
+    id: 'sf-2019',
+    year: 2019,
+    city: 'San Francisco',
+    name: '49ers',
+    offense: { runAttack: 90, passAttack: 82, olStrength: 88, skillPlayers: 82 },
+    defense: { runStop: 88, passCoverage: 80, passRush: 92, secondary: 78 },
+  },
+  {
+    id: 'phi-2017',
+    year: 2017,
+    city: 'Philadelphia',
+    name: 'Eagles',
+    offense: { runAttack: 82, passAttack: 84, olStrength: 86, skillPlayers: 80 },
+    defense: { runStop: 82, passCoverage: 78, passRush: 88, secondary: 76 },
+  },
+  {
+    id: 'bal-2012',
+    year: 2012,
+    city: 'Baltimore',
+    name: 'Ravens',
+    offense: { runAttack: 76, passAttack: 78, olStrength: 74, skillPlayers: 76 },
+    defense: { runStop: 84, passCoverage: 82, passRush: 86, secondary: 84 },
+  },
+  {
+    id: 'no-2009',
+    year: 2009,
+    city: 'New Orleans',
+    name: 'Saints',
+    offense: { runAttack: 74, passAttack: 95, olStrength: 82, skillPlayers: 92 },
+    defense: { runStop: 72, passCoverage: 74, passRush: 76, secondary: 72 },
+  },
+  {
+    id: 'pit-1978',
+    year: 1978,
+    city: 'Pittsburgh',
+    name: 'Steelers',
+    offense: { runAttack: 86, passAttack: 80, olStrength: 84, skillPlayers: 82 },
+    defense: { runStop: 92, passCoverage: 88, passRush: 94, secondary: 88 },
+  },
+  {
+    id: 'atl-2016',
+    year: 2016,
+    city: 'Atlanta',
+    name: 'Falcons',
+    offense: { runAttack: 76, passAttack: 94, olStrength: 78, skillPlayers: 92 },
+    defense: { runStop: 68, passCoverage: 70, passRush: 66, secondary: 68 },
+  },
+  {
+    id: 'phi-2022',
+    year: 2022,
+    city: 'Philadelphia',
+    name: 'Eagles',
+    offense: { runAttack: 88, passAttack: 86, olStrength: 92, skillPlayers: 84 },
+    defense: { runStop: 82, passCoverage: 76, passRush: 84, secondary: 74 },
+  },
+]
