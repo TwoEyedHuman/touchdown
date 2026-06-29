@@ -15,28 +15,28 @@ const RATING_LABEL = {
 // [x, yardsAheadOfScrimmage, label]
 const DEFENDERS = {
   '4-3': [
-    [90, 9, 'DE'], [125, 9, 'DT'], [165, 9, 'DT'], [200, 9, 'DE'],
-    [105, 20, 'OLB'], [148, 21, 'MLB'], [185, 20, 'OLB'],
-    [50, 30, 'CB'], [240, 30, 'CB'],
-    [132, 41, 'FS'], [162, 41, 'SS'],
+    [90, 2.5, 'DE'], [125, 2.5, 'DT'], [165, 2.5, 'DT'], [200, 2.5, 'DE'],
+    [105, 5, 'OLB'], [148, 5, 'MLB'], [185, 5, 'OLB'],
+    [50, 8, 'CB'], [240, 8, 'CB'],
+    [132, 15, 'FS'], [162, 15, 'SS'],
   ],
   '3-4': [
-    [110, 9, 'DE'], [148, 9, 'NT'], [180, 9, 'DE'],
-    [78, 20, 'OLB'], [126, 21, 'ILB'], [165, 21, 'ILB'], [212, 20, 'OLB'],
-    [50, 29, 'CB'], [240, 29, 'CB'],
-    [132, 41, 'FS'], [162, 41, 'SS'],
+    [110, 2.5, 'DE'], [148, 2.5, 'NT'], [180, 2.5, 'DE'],
+    [78, 2.5, 'OLB'], [126, 5, 'ILB'], [165, 5, 'ILB'], [212, 2.5, 'OLB'],
+    [50, 8, 'CB'], [240, 8, 'CB'],
+    [132, 15, 'FS'], [162, 15, 'SS'],
   ],
   Nickel: [
-    [90, 9, 'DE'], [125, 9, 'DT'], [165, 9, 'DT'], [200, 9, 'DE'],
-    [115, 20, 'OLB'], [178, 20, 'OLB'],
-    [50, 30, 'CB'], [148, 28, 'NB'], [240, 30, 'CB'],
-    [128, 41, 'FS'], [165, 41, 'SS'],
+    [90, 2.5, 'DE'], [125, 2.5, 'DT'], [165, 2.5, 'DT'], [200, 2.5, 'DE'],
+    [115, 5, 'OLB'], [178, 5, 'OLB'],
+    [50, 7, 'CB'], [148, 5, 'NB'], [240, 7, 'CB'],
+    [128, 14, 'FS'], [165, 14, 'SS'],
   ],
   Dime: [
-    [90, 9, 'DE'], [125, 9, 'DT'], [165, 9, 'DT'], [200, 9, 'DE'],
-    [148, 22, 'MLB'],
-    [50, 31, 'CB'], [150, 28, 'NB'], [240, 31, 'CB'],
-    [105, 41, 'FS'], [148, 41, 'SS'], [188, 41, 'DB'],
+    [90, 2.5, 'DE'], [125, 2.5, 'DT'], [165, 2.5, 'DT'], [200, 2.5, 'DE'],
+    [148, 5, 'MLB'],
+    [50, 7, 'CB'], [150, 5, 'NB'], [240, 7, 'CB'],
+    [105, 14, 'FS'], [148, 14, 'SS'], [188, 14, 'DB'],
   ],
 }
 
@@ -68,7 +68,7 @@ function deriveFormation(defense) {
 const DOWN_LABELS = ['1ST', '2ND', '3RD', '4TH']
 const W = 300
 const H = 560
-const SCRIMMAGE_Y = 380
+const SCRIMMAGE_Y = 300
 const PX_PER_YARD = 7.6
 const ORIGIN_YARD = 25
 const CAM_LOCK_YARD = 85
@@ -219,7 +219,7 @@ export function FieldView({ defenseTeam, drive, selectedPlay }) {
 
           {offensePlayers && offensePlayers.map(({ x, y, label }, i) => (
             <g key={i} style={{ transform: `translate(${x}px, ${y}px)`, transition: 'transform 0.4s ease' }}>
-              <circle cx={0} cy={0} r={12}
+              <circle cx={0} cy={0} r={9}
                 fill="#3b82f6" fillOpacity="0.85"
                 stroke="white" strokeWidth="1.5" strokeOpacity="0.75" />
               <text x={0} y={4} textAnchor="middle"
@@ -231,7 +231,7 @@ export function FieldView({ defenseTeam, drive, selectedPlay }) {
 
           {renderedDefenders.map(({ x, y, label }, i) => (
             <g key={i} style={{ transform: `translate(${x}px, ${y}px)`, transition: 'transform 0.5s cubic-bezier(0.4,0,0.2,1)' }}>
-              <circle cx={0} cy={0} r={15}
+              <circle cx={0} cy={0} r={9}
                 fill="#ef4444" fillOpacity={dotOpacity}
                 stroke="white" strokeWidth="1.5" strokeOpacity="0.65" />
               <text x={0} y={4} textAnchor="middle"
