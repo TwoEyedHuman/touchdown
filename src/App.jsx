@@ -10,6 +10,7 @@ function App() {
   const [offenseTeam, setOffenseTeam] = useState(null)
   const [defenseTeam, setDefenseTeam] = useState(null)
   const [drive, dispatch] = useReducer(driveReducer, initialDriveState)
+  const [selectedPlay, setSelectedPlay] = useState(null)
 
   useEffect(() => {
     if (drive.result !== null && gamePhase === 'drive') {
@@ -27,6 +28,7 @@ function App() {
     dispatch({ type: 'RESET' })
     setOffenseTeam(null)
     setDefenseTeam(null)
+    setSelectedPlay(null)
     setGamePhase('team_select')
   }
 
@@ -39,21 +41,15 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-start px-4 py-10 gap-6">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold text-green-700">Drive</h1>
-        <p className="text-gray-500 mt-1 text-sm">
-          {offenseTeam?.year} {offenseTeam?.city} {offenseTeam?.name} vs{' '}
-          {defenseTeam?.year} {defenseTeam?.city} {defenseTeam?.name}
-        </p>
-      </div>
-      <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 items-start justify-center">
-        <FieldView defenseTeam={defenseTeam} />
+    <div className="relative h-screen w-screen overflow-hidden">
+      <FieldView defenseTeam={defenseTeam} drive={drive} selectedPlay={selectedPlay} />
+      <div className="absolute inset-x-0 bottom-0 z-10">
         <PlayPicker
           drive={drive}
           dispatch={dispatch}
           offenseTeam={offenseTeam}
           defenseTeam={defenseTeam}
+          onSelectPlay={setSelectedPlay}
         />
       </div>
     </div>
