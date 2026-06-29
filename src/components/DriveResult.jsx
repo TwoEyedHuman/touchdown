@@ -9,6 +9,7 @@ function yardLabel(yards) {
 function eventLabel(event) {
   if (event === 'sack') return 'sack'
   if (event === 'tackle_for_loss') return 'TFL'
+  if (event === 'incomplete') return 'incomplete'
   return null
 }
 

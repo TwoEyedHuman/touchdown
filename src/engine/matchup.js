@@ -13,7 +13,7 @@ function randInt(min, max) {
  * @param {import('../config/plays.js').Play} play
  * @param {import('../config/teams.js').Team} offenseTeam
  * @param {import('../config/teams.js').Team} defenseTeam
- * @returns {{ yardsGained: number, event: null | 'sack' | 'tackle_for_loss' }}
+ * @returns {{ yardsGained: number, event: null | 'sack' | 'tackle_for_loss' | 'incomplete' }}
  */
 export function resolvePlay(play, offenseTeam, defenseTeam) {
   const offenseScore =
@@ -39,6 +39,15 @@ export function resolvePlay(play, offenseTeam, defenseTeam) {
     const sackProbability = play.sackRisk * passRushFactor
     if (Math.random() < sackProbability) {
       return { yardsGained: randInt(-7, -3), event: 'sack' }
+    }
+  }
+
+  // Incomplete pass check — pass plays only
+  if (play.incompleteRisk > 0) {
+    // passCoverage (1–99) scales incomplete probability: base at passCoverage=50
+    const coverageFactor = defenseTeam.defense.passCoverage / 50
+    if (Math.random() < play.incompleteRisk * coverageFactor) {
+      return { yardsGained: 0, event: 'incomplete' }
     }
   }
 

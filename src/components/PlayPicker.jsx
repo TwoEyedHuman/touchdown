@@ -2,7 +2,13 @@ import { useState, useEffect, useRef } from 'react'
 import { plays } from '../config/plays.js'
 
 function pickPlays() {
-  return [...plays].sort(() => Math.random() - 0.5).slice(0, 3)
+  const runs = plays.filter((p) => p.type === 'run')
+  const passes = plays.filter((p) => p.type === 'pass')
+  const run1 = runs[Math.floor(Math.random() * runs.length)]
+  const pass1 = passes[Math.floor(Math.random() * passes.length)]
+  const rest = plays.filter((p) => p !== run1 && p !== pass1)
+  const third = rest[Math.floor(Math.random() * rest.length)]
+  return [run1, pass1, third].sort(() => Math.random() - 0.5)
 }
 
 function yardLabel(yards) {
