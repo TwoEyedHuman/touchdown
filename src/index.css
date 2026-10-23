@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+@keyframes play-draw {
+  from { stroke-dashoffset: 200; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes play-show {
+  0%,   6% { opacity: 0; }
+  12%, 60% { opacity: 1; }
+  100%     { opacity: 0; }
+}
+@keyframes play-dot-show {
+  0%,  28% { opacity: 0; }
+  38%, 60% { opacity: 1; }
+  100%     { opacity: 0; }
+}

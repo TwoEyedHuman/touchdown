@@ -17,10 +17,14 @@ export function driveReducer(state, action) {
 
   const playLog = {
     playName: play.name,
+    playId: play.id,
+    playType: play.type,
     yardsGained,
     event,
     down: state.down,
     yardsToGo: state.yardsToGo,
+    randCatchX: 60 + Math.random() * 180,
+    randSweepDir: Math.random() < 0.5 ? -1 : 1,
   }
 
   const newFieldPosition = state.fieldPosition + yardsGained

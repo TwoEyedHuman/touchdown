@@ -1,4 +1,4 @@
-import { useReducer, useState, useEffect } from 'react'
+import { useReducer, useState, useEffect, useRef } from 'react'
 import { TeamSelector } from './components/TeamSelector.jsx'
 import { FieldView } from './components/FieldView.jsx'
 import { PlayPicker } from './components/PlayPicker.jsx'
@@ -10,7 +10,19 @@ function App() {
   const [offenseTeam, setOffenseTeam] = useState(null)
   const [defenseTeam, setDefenseTeam] = useState(null)
   const [drive, dispatch] = useReducer(driveReducer, initialDriveState)
+  const [displayDrive, setDisplayDrive] = useState(initialDriveState)
   const [selectedPlay, setSelectedPlay] = useState(null)
+  const delayRef = useRef(null)
+
+  useEffect(() => {
+    clearTimeout(delayRef.current)
+    if (drive.plays.length === 0) {
+      setDisplayDrive(drive)
+    } else {
+      delayRef.current = setTimeout(() => setDisplayDrive(drive), 1600)
+    }
+    return () => clearTimeout(delayRef.current)
+  }, [drive])
 
   useEffect(() => {
     if (drive.result !== null && gamePhase === 'drive') {
@@ -42,7 +54,13 @@ function App() {
 
   return (
     <div className="relative h-screen w-screen overflow-hidden">
-      <FieldView defenseTeam={defenseTeam} drive={drive} selectedPlay={selectedPlay} />
+      <FieldView
+        defenseTeam={defenseTeam}
+        drive={displayDrive}
+        selectedPlay={selectedPlay}
+        lastPlay={drive.plays[drive.plays.length - 1] ?? null}
+        playResultKey={drive.plays.length}
+      />
       <div className="absolute inset-x-0 bottom-0 z-10">
         <PlayPicker
           drive={drive}

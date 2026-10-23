@@ -65,6 +65,80 @@ function deriveFormation(defense) {
   ).name
 }
 
+function PlayResultOverlay({ lastPlay }) {
+  if (!lastPlay) return null
+  const { yardsGained, event, playType, playId, randCatchX, randSweepDir } = lastPlay
+  const gainY = SCRIMMAGE_Y - yardsGained * PX_PER_YARD
+  const QB_Y = SCRIMMAGE_Y + 5.5 * PX_PER_YARD
+  const RB_Y = SCRIMMAGE_Y + 7.5 * PX_PER_YARD
+  const DUR = '1.6s'
+
+  if (event === 'incomplete') {
+    const cx = randCatchX
+    const cy = SCRIMMAGE_Y - 10 * PX_PER_YARD
+    const r = 11
+    return (
+      <g style={{ animation: `play-show ${DUR} ease forwards` }} opacity="0">
+        <circle cx={cx} cy={cy} r={r * 1.5} stroke="#9ca3af" strokeWidth="1.5" fill="none" strokeOpacity="0.45" />
+        <line x1={cx - r} y1={cy - r} x2={cx + r} y2={cy + r} stroke="#9ca3af" strokeWidth="3.5" strokeLinecap="round" />
+        <line x1={cx + r} y1={cy - r} x2={cx - r} y2={cy + r} stroke="#9ca3af" strokeWidth="3.5" strokeLinecap="round" />
+        <text x={cx} y={cy + r * 2.4} textAnchor="middle" fill="#9ca3af" fontSize="8" fontWeight="bold" fontFamily="sans-serif">INCOMPLETE</text>
+      </g>
+    )
+  }
+
+  if (event === 'sack') {
+    const cx = 148, cy = gainY
+    const r = 10
+    return (
+      <g style={{ animation: `play-show ${DUR} ease forwards` }} opacity="0">
+        <circle cx={cx} cy={cy} r={r * 2} stroke="#ef4444" strokeWidth="2" fill="rgba(239,68,68,0.15)" />
+        <line x1={cx - r} y1={cy - r} x2={cx + r} y2={cy + r} stroke="#ef4444" strokeWidth="3.5" strokeLinecap="round" />
+        <line x1={cx + r} y1={cy - r} x2={cx - r} y2={cy + r} stroke="#ef4444" strokeWidth="3.5" strokeLinecap="round" />
+        <text x={cx} y={cy - r * 2.6} textAnchor="middle" fill="#ef4444" fontSize="9" fontWeight="bold" fontFamily="sans-serif" letterSpacing="1">SACK</text>
+      </g>
+    )
+  }
+
+  if (playType === 'run') {
+    let pathD, endX = 148
+    const color = event === 'tackle_for_loss' ? '#f97316' : '#facc15'
+    if (playId === 'pitch-sweep') {
+      endX = 148 + randSweepDir * 50
+      pathD = `M 148 ${RB_Y} Q ${endX} ${(RB_Y + gainY) * 0.5 + 8} ${endX} ${gainY}`
+    } else if (playId === 'hb-draw') {
+      pathD = `M 148 ${RB_Y} L 150 ${RB_Y - 18} L 142 ${(RB_Y + gainY) * 0.5} L 148 ${gainY}`
+    } else {
+      pathD = `M 148 ${RB_Y} L 148 ${gainY}`
+    }
+    return (
+      <g style={{ animation: `play-show ${DUR} ease forwards` }} opacity="0">
+        <path d={pathD} stroke={color} strokeWidth="2.5" fill="none"
+          strokeLinecap="round" strokeLinejoin="round" strokeDasharray="5 4" />
+        <circle cx={endX} cy={gainY} r={5} fill={color} />
+      </g>
+    )
+  }
+
+  if (playType === 'pass') {
+    const cx = randCatchX
+    const midY = (QB_Y + gainY) / 2
+    const arcH = 28 + Math.abs(QB_Y - gainY) * 0.25
+    const pathD = `M 148 ${QB_Y} Q ${(148 + cx) / 2} ${midY - arcH} ${cx} ${gainY}`
+    return (
+      <g>
+        <path d={pathD} stroke="white" strokeWidth="2.5" fill="none"
+          strokeLinecap="round" strokeDasharray="200"
+          style={{ animation: `play-draw 0.45s ease forwards, play-show ${DUR} ease forwards` }} />
+        <circle cx={cx} cy={gainY} r={5.5} fill="#60a5fa" stroke="white" strokeWidth="1.5"
+          style={{ animation: `play-dot-show ${DUR} ease forwards` }} opacity="0" />
+      </g>
+    )
+  }
+
+  return null
+}
+
 const DOWN_LABELS = ['1ST', '2ND', '3RD', '4TH']
 const W = 300
 const H = 560
@@ -84,7 +158,7 @@ function fieldPosText(pos) {
   return pos <= 50 ? `OWN ${pos}` : `OPP ${100 - pos}`
 }
 
-export function FieldView({ defenseTeam, drive, selectedPlay }) {
+export function FieldView({ defenseTeam, drive, selectedPlay, lastPlay, playResultKey }) {
   const formation = deriveFormation(defenseTeam.defense)
   const ratingKey = FORMATION_BY_RATING.find((f) => f.name === formation).key
   const rating = defenseTeam.defense[ratingKey]
@@ -240,6 +314,8 @@ export function FieldView({ defenseTeam, drive, selectedPlay }) {
               </text>
             </g>
           ))}
+
+          <PlayResultOverlay key={playResultKey} lastPlay={lastPlay} />
         </g>
 
         {/* Fixed UI */}

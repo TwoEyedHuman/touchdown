@@ -56,8 +56,8 @@ export const plays = [
     offenseKeys: ['passAttack', 'skillPlayers'],
     defenseKeys: ['passCoverage'],
     baseYards: { min: -2, max: 12 },
-    sackRisk: 0.15,
-    incompleteRisk: 0.2,
+    sackRisk: 0.1,
+    incompleteRisk: 0.1,
   },
   {
     id: 'play-action',
@@ -67,8 +67,8 @@ export const plays = [
     offenseKeys: ['passAttack', 'olStrength'],
     defenseKeys: ['passRush'],
     baseYards: { min: 2, max: 15 },
-    sackRisk: 0.15,
-    incompleteRisk: 0.15,
+    sackRisk: 0.05,
+    incompleteRisk: 0.2,
   },
   {
     id: 'deep-pass',
@@ -77,8 +77,8 @@ export const plays = [
     description: 'Long bomb targeting receivers running vertical routes.',
     offenseKeys: ['passAttack'],
     defenseKeys: ['secondary', 'passRush'],
-    baseYards: { min: -5, max: 30 },
-    sackRisk: 0.3,
+    baseYards: { min: 10, max: 40 },
+    sackRisk: 0.15,
     incompleteRisk: 0.35,
   },
   {
